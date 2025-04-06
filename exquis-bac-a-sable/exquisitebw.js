@@ -1,32 +1,56 @@
 (() => {
   let s, r, rinc;
+  let RADIUS;
 
   async function init() {
     s = O_currentsection;
-    r = 7;
-    rinc = 0.5;
+    let radius_tmp = O_sectionheight / 2;
+    RADIUS = radius_tmp - radius_tmp / 3;
   }
 
   function draw() {
+    if (O_counter % O_sectionduration > 1) {
+      return;
+    }
+
     // Move to the section
     push();
     translate(s.x, s.y);
 
-    // Create border around section
-    fill(0, 0, 0);
-    rect(0, 0, O_sectionwidth, O_sectionheight);
     fill(0, 0, 100);
     noStroke();
+    rect(0, 0, O_sectionwidth, O_sectionheight);
 
-    // Draw our art
-    arc(s.x1, s.y1, r, r, 0, PI);
-    arc(s.x2, s.y2, r, r, PI * 0.5, PI * 1.5);
-    arc(s.x3, s.y3, r, r, PI, 2 * PI);
-    arc(s.x4, s.y4, r, r, PI * 1.5, PI * 0.5);
-    r += rinc;
+    for (let i = 200; i <= 400; i += 10) {
+      blob(0, O_sectionwidth / 2 - RADIUS / 4, O_sectionheight / 2);
+    }
+    for (let i = 200; i <= 400; i += 10) {
+      blob(230, O_sectionwidth / 2 + RADIUS / 4, O_sectionheight / 2);
+    }
 
     // Pop out of the section
     pop();
+  }
+
+  function blob(h, x1, y1) {
+    noStroke();
+
+    for (let i = 0; i < 10; i++) {
+      let rs = random(2.0) - 1.0;
+      fill((h + 4 * rs + 360) % 360, 80, 80, 2.5); // on garde les teintes dans [0, 360]
+
+      beginShape();
+
+      for (let a = 0; a <= 180; a += 10) {
+        let angle = radians(a);
+        let r = RADIUS + (RADIUS / 3) * (noise(4 * rs + a) * 2 - 1);
+        let x = r * cos(angle);
+        let y = r * sin(angle);
+        vertex(x1 + x, y1 + y);
+      }
+
+      endShape(CLOSE);
+    }
   }
 
   // Use the name of the current js file (without the extension) as the key in the object window.
