@@ -120,7 +120,7 @@
     let step = O_counter % O_sectionduration;
     if (step >= 1) {
       if (q1.x3 + x / 20 <= O_sectionwidth) {
-        q1.update(0, 0, 0, 0, x / 20, 0, x / 20, 0);
+        q1.update(0, 0, 0, 0, x / 40, 0, x / 40, 0);
       }
       q1.display();
     }
@@ -129,14 +129,14 @@
       console.log(s.y2 - x / 20 >= 0);
 
       if (q2.y3 - x / 20 >= 0) {
-        q2.update(0, 0, 0, 0, 0, -x / 20, 0, -x / 20); // Update the position of the bottom half
+        q2.update(0, 0, 0, 0, 0, -x / 40, 0, -x / 40); // Update the position of the bottom half
       }
       q2.display();
     }
 
     if (step >= O_sectionduration / 2) {
       if (q3.x3 - x / 20 >= 0) {
-        q3.update(0, 0, 0, 0, x / 20, 0, x / 20, 0); // Update the position of the bottom half
+        q3.update(0, 0, 0, 0, x / 40, 0, x / 40, 0); // Update the position of the bottom half
         q3.display();
       }
     }
@@ -151,5 +151,5 @@
     pop();
   }
 
-  window.exquisitetaha1 = { init, draw };
+  window.stella = { init, draw };
 })();
